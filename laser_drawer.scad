@@ -1,0 +1,17 @@
+ptsorig = [[-1,0.25],[-1.1,0.15],[-1.2,0],[-1.1,0],[-1,0],[-0.9,0],[-0.8,0],[-0.7,0],[-0.6,0],[-0.5,0.08],[-0.4,0.016],[-0.3,0.024],[-0.2,0.032],[-0.1,0.041],[0,0.05],[0.1,0.075],[0.2,0.1],[0.3,0.125],[0.4,0.14],[0.5,0.16],[0.6,0.2],[0.7,0.25],[0.8,0.3],[0.9,0.35],[1,0.4],[1.1,0.475],[1.2,0.6],[1.225,0.7],[1.2,0.8],[1.1,0.83],[1,0.84],[0.9,0.85],[1,0.95],[1.1,1.05],[1.15,1.1],[1.1,1.1],[1,1.1],[0.9,1.1],[0.8,1.1],[0.7,1.1],[0.6,1.1],[0.5,1.09],[0.4,1.08],[0.3,1.07],[0.2,1.06],[0.1,1.05],[0,1.04],[-0.1,1.03],[-0.2,1.02],[-0.3,1.01],[-0.4,1],[-0.5,0.975],[-0.6,0.95],[-0.7,0.925],[-0.8,0.9],[-0.9,0.865],[-1,0.835],[-1.1,0.8],[-1.2,0.7],[-1.3,0.6],[-1.37,0.5],[-1.37,0.4],[-1.3,0.3],[-1.2,0.28],[-1.1,0.25]];
+function scalepts(i,pts,factor) = (i == -1 ? [] : concat(scalepts(i-1,pts,factor),[[pts[i][0]*factor,pts[i][1]*factor]]));
+pts = scalepts(len(ptsorig)-1,ptsorig,0.1);
+d = sqrt(2);
+inc = 360/len(pts);
+echo(inc);
+function calcpt1(pt) = sqrt(pow(pt[0]+1,2)+pow(pt[1]+1,2)) - (sqrt(2)-1);
+function calcdeg1(pt) = atan((pt[1]+sqrt(2)/2)/(pt[0]+sqrt(2)/2)) - 45;
+function generatepts1(i,pts,deg) = (i == len(pts) ? [] : concat(generatepts1(i+1,pts,deg+inc),[[calcpt1(pts[i])*cos(deg+calcdeg1(pts[i])),calcpt1(pts[i])*sin(deg+calcdeg1(pts[i]))]]));
+function calcpt2(pt) = sqrt(pow(-pt[0]+1,2)+pow(pt[1]+1,2)) - (sqrt(2)-1);
+function calcdeg2(pt) = atan((pt[1]+sqrt(2)/2)/(-pt[0]+sqrt(2)/2)) - 45;
+function generatepts2(i,pts,deg) = (i == len(pts) ? [] : concat(generatepts2(i+1,pts,deg-inc),[[calcpt2(pts[i])*cos(deg-calcdeg2(pts[i])),calcpt2(pts[i])*sin(deg-calcdeg2(pts[i]))]]));
+c1pts = generatepts1(0,pts,-$t*inc*len(pts));
+c2pts = generatepts2(0,pts,$t*inc*len(pts) + 180);
+translate([-d/2,0,0.10]) color("Red") polygon(points=c1pts,convexity=100);
+translate([d/2,0,0.10]) color("Blue") polygon(points=c2pts,convexity=100);
+translate([0,sqrt(2)/2,0]) color("Green") polygon(points=pts);
