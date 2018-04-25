@@ -75,7 +75,8 @@ union() {
     };
     
     translate([2,-3.5,-5.5]) linear_extrude(height=10.5) square(1,1);
-    translate([-3,-3.5,-5.5]) linear_extrude(height=10.5) square(1,1);   
+    translate([-3,-3.5,-5.5]) linear_extrude(height=10.5) square(1,1);
+    translate([-0.25,-3.5,-5.5]) linear_extrude(height=10.5) square(0.5,0.5);
 }
 difference(){
     union() {
@@ -102,3 +103,5 @@ union(){
     translate([-2.5,-1.375,-0.81]) linear_extrude(height=0.32) circle(0.115, $fn=100);
     translate([-2.5,-1.375,-1.81]) linear_extrude(height=1) circle(0.25, $fn=100);
 }
+
+
