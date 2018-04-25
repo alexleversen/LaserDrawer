@@ -12,6 +12,52 @@ function calcdeg2(pt) = atan((pt[1]+sqrt(2)/2)/(-pt[0]+sqrt(2)/2)) - 45;
 function generatepts2(i,pts,deg) = (i == len(pts) ? [] : concat(generatepts2(i+1,pts,deg-inc),[[calcpt2(pts[i])*cos(deg-calcdeg2(pts[i])),calcpt2(pts[i])*sin(deg-calcdeg2(pts[i]))]]));
 c1pts = generatepts1(0,pts,-$t*inc*len(pts));
 c2pts = generatepts2(0,pts,$t*inc*len(pts) + 180);
-translate([-d/2,0,0.10]) color("Red") polygon(points=c1pts,convexity=100);
-translate([d/2,0,0.10]) color("Blue") polygon(points=c2pts,convexity=100);
-translate([0,sqrt(2)/2,0]) color("Green") polygon(points=pts);
+//translate([0,sqrt(2)/2,0]) color("Green") linear_extrude(height=0.001)polygon(points=pts);
+module Gear(radius,teeth,teeth_height) {
+    for(n=[0:teeth-1]) {
+        rotate(a=[0,0,n*360/teeth]){
+            linear_extrude(height=0.2) {
+                polygon(points=[[0,0],[radius*sin(180/teeth),radius*cos(180/teeth)],[(radius+teeth_height)*sin(135/teeth),(radius+teeth_height)*cos(135/teeth)],[(radius+teeth_height)*sin(45/teeth),(radius+teeth_height)*cos(45/teeth)],[0,radius],[-radius*sin(180/teeth),radius*cos(180/teeth)]]);
+            };
+        };
+    };
+}
+
+difference(){
+    union(){
+        translate([-d/2,0,0]) color("Red") linear_extrude(height=0.2) polygon(points=c1pts,convexity=100);
+        translate([d/2,0,0.20]) color("Blue") linear_extrude(height=0.2)polygon(points=c2pts,convexity=100);
+        color("Purple") translate([-d/2,0,0.4]) rotate([0,0,-$t*360]) Gear(0.65,15,0.1);
+        color("Yellow") translate([d/2,0,0.4]) rotate([0,0,$t*360]) Gear(0.65,15,0.1);
+    };
+    translate([-d/2,0,-1]) linear_extrude(height=2) rotate([0,0,-$t*360]) polygon(points=[[-0.2,0.1],[0.1,0.1],[0.1,-0.1],[0,-0.1],[0,0],[-0.2,0]]);
+    translate([d/2,0,-1]) linear_extrude(height=2) rotate([0,0,$t*360]) polygon(points=[[0.2,0.1],[-0.1,0.1],[-0.1,-0.1],[0,-0.1],[0,0],[0.2,0]]);
+}
+union(){
+    translate([-d/2,0,-5]) linear_extrude(height=10) rotate([0,0,-$t*360]) polygon(points=[[-0.19,0.09],[0.09,0.09],[0.09,-0.09],[0.01,-0.09],[0.01,0.01],[-0.19,0.01]]);
+    translate([-d/2,0,-5]) linear_extrude(height=1) circle(0.25,$fn=100);
+    translate([-d/2,0,4]) linear_extrude(height=1) circle(0.25,$fn=100);
+    
+}
+union() {
+    translate([d/2,0,-5]) linear_extrude(height=10) rotate([0,0,$t*360]) polygon(points=[[0.19,0.09],[-0.09,0.09],[-0.09,-0.09],[-0.01,-0.09],[-0.01,0.01],[0.19,0.01]]);
+    translate([d/2,0,-5]) linear_extrude(height=1) circle(0.25,$fn=100);
+    translate([d/2,0,4]) linear_extrude(height=1) circle(0.25,$fn=100);
+}
+
+difference() {
+    translate([-d/2,0,-5.5]) linear_extrude(height=1.5) circle(0.4, $fn=100);
+    translate([-d/2,0,-5.05]) linear_extrude(height=1.05) circle(0.26, $fn=100);
+}
+difference() {
+    translate([d/2,0,-5.5]) linear_extrude(height=1.5) circle(0.4, $fn=100);
+    translate([d/2,0,-5.05]) linear_extrude(height=1.05) circle(0.26, $fn=100);
+}
+difference() {
+    translate([-d/2,0,4]) linear_extrude(height=1.5) circle(0.4, $fn=100);
+    translate([-d/2,0,4]) linear_extrude(height=1.05) circle(0.26, $fn=100);
+}
+difference() {
+    translate([d/2,0,4]) linear_extrude(height=1.5) circle(0.4, $fn=100);
+    translate([d/2,0,4]) linear_extrude(height=1.05) circle(0.26, $fn=100);
+}
