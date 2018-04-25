@@ -22,86 +22,91 @@ module Gear(radius,teeth,teeth_height) {
         };
     };
 }
-
-difference(){
-    union(){
+s=10;
+scale(v=[s,s,s]) {
+    
+    //Disc 1
+    difference(){
         translate([-d/2,0,0]) color("Red") linear_extrude(height=0.2) polygon(points=c1pts,convexity=100);
-        translate([d/2,0,0.20]) color("Blue") linear_extrude(height=0.2)polygon(points=c2pts,convexity=100);
-        
-    };
-    translate([-d/2,0,-1]) linear_extrude(height=2) rotate([0,0,-$t*360]) polygon(points=[[-0.2,0.1],[0.1,0.1],[0.1,-0.1],[0,-0.1],[0,0],[-0.2,0]]);
-    translate([d/2,0,-1]) linear_extrude(height=2) rotate([0,0,$t*360]) polygon(points=[[0.2,0.1],[-0.1,0.1],[-0.1,-0.1],[0,-0.1],[0,0],[0.2,0]]);
-}
-union(){
-    color("Purple") translate([-d/2,0,0.4]) rotate([0,0,-$t*360]) Gear(0.65,15,0.1);
-    translate([-d/2,0,-5]) linear_extrude(height=10) rotate([0,0,-$t*360]) polygon(points=[[-0.19,0.09],[0.09,0.09],[0.09,-0.09],[0.01,-0.09],[0.01,0.01],[-0.19,0.01]]);
-    translate([-d/2,0,-5]) linear_extrude(height=1) circle(0.25,$fn=100);
-    translate([-d/2,0,4]) linear_extrude(height=1) circle(0.25,$fn=100);
-    
-}
-union() {
-    color("Yellow") translate([d/2,0,0.4]) rotate([0,0,$t*360]) Gear(0.65,15,0.1);
-    translate([d/2,0,-5]) linear_extrude(height=10) rotate([0,0,$t*360]) polygon(points=[[0.19,0.09],[-0.09,0.09],[-0.09,-0.09],[-0.01,-0.09],[-0.01,0.01],[0.19,0.01]]);
-    translate([d/2,0,-5]) linear_extrude(height=1) circle(0.25,$fn=100);
-    translate([d/2,0,4]) linear_extrude(height=1) circle(0.25,$fn=100);
-}
-
-union() {
-    difference() {
-        translate([-d/2,0,-5.5]) linear_extrude(height=1.5) circle(0.4, $fn=100);
-        translate([-d/2,0,-5.05]) linear_extrude(height=1.05) circle(0.26, $fn=100);
-    };
-    difference() {
-        translate([d/2,0,-5.5]) linear_extrude(height=1.5) circle(0.4, $fn=100);
-        translate([d/2,0,-5.05]) linear_extrude(height=1.05) circle(0.26, $fn=100);
-    };
-    difference() {
-        translate([-d/2,0,4]) linear_extrude(height=1.5) circle(0.4, $fn=100);
-        translate([-d/2,0,4]) linear_extrude(height=1.05) circle(0.26, $fn=100);
-        translate([-d/2-0.5,0,3.5]) linear_extrude(height=2) square(1,1);
-    };
-    difference() {
-        translate([d/2,0,4]) linear_extrude(height=1.5) circle(0.4, $fn=100);
-        translate([d/2,0,4]) linear_extrude(height=1.05) circle(0.26, $fn=100);
-        translate([d/2-0.5,0,3.5]) linear_extrude(height=2) square(1,1);
-    };
-    translate([0,0,-6.5]) linear_extrude(height=1) difference() { 
-        polygon(points=[[-3,0.5],[-3,-3.5],[3,-3.5],[3,0.5]]);
-        polygon(points=[[-2,-0.5],[-2,-2.5],[2,-2.5],[2,-0.5]]);
-    };
-    translate([0,0,5]) linear_extrude(height=1) difference() {
-        polygon(points=[[-3,0.5],[-3,-3.5],[3,-3.5],[3,0.5]]);
-        polygon(points=[[-2,-0.5],[-2,-2.5],[2,-2.5],[2,-0.5]]);
-    };
-    
-    translate([2,-3.5,-5.5]) linear_extrude(height=10.5) square(1,1);
-    translate([-3,-3.5,-5.5]) linear_extrude(height=10.5) square(1,1);
-    translate([-0.25,-3.5,-5.5]) linear_extrude(height=10.5) square(0.5,0.5);
-}
-difference(){
-    union() {
-        translate([-3,-2.5,-0.25]) linear_extrude(height=0.65) square(size=[1,2.5]);
-        translate([-2.5,0,-0.25]) linear_extrude(height=0.65) circle(0.5, $fn=100);
+        translate([-d/2,0,-1]) linear_extrude(height=2) rotate([0,0,-$t*360]) polygon(points=[[-0.2,0.1],[0.1,0.1],[0.1,-0.1],[0,-0.1],[0,0],[-0.2,0]]);
     }
-    translate([-2.5,0,-0.5]) linear_extrude(height=1) circle(0.2, $fn=100);
-}
-union(){
-    translate([-2.5,0,0.41]) Gear(1.03,23,0.1);
-    translate([-2.5,0,-0.5]) linear_extrude(height=1) circle(0.19, $fn=100);
-    translate([-2.5,0,-0.3]) linear_extrude(height=0.04) circle(0.3,$fn=100);
-    translate([-2.5,0,-0.8]) linear_extrude(height=0.3) circle(0.4,$fn=100);
-    difference() {
-        union(){
-            translate([-2.5,0,-0.8]) linear_extrude(height=0.3) /*rotate([0,0,90]) */polygon(points=[[-0.4,0],[0.4,0],[0.2,-1.4],[-0.2,-1.4]]);
-            translate([-2.5,-1.4,-0.8]) linear_extrude(height=0.3) circle(0.2,$fn=100);
+
+    //Disc 2
+    difference(){
+        translate([d/2,0,0.20]) color("Blue") linear_extrude(height=0.2)polygon(points=c2pts,convexity=100);
+        translate([d/2,0,-1]) linear_extrude(height=2) rotate([0,0,$t*360]) polygon(points=[[0.2,0.1],[-0.1,0.1],[-0.1,-0.1],[0,-0.1],[0,0],[0.2,0]]);
+    }
+
+    //Gear/axle 1
+    union(){
+        color("Purple") translate([-d/2,0,0.4]) rotate([0,0,-$t*360]) Gear(0.65,15,0.1);
+        translate([-d/2,0,-5]) linear_extrude(height=10) rotate([0,0,-$t*360]) polygon(points=[[-0.19,0.09],[0.09,0.09],[0.09,-0.09],[0.01,-0.09],[0.01,0.01],[-0.19,0.01]]);
+        translate([-d/2,0,-5]) linear_extrude(height=1) circle(0.25,$fn=100);
+        translate([-d/2,0,4]) linear_extrude(height=1) circle(0.25,$fn=100);
+    }
+
+    //Gear/axle 2
+    union() {
+        color("Yellow") translate([d/2,0,0.4]) rotate([0,0,$t*360]) Gear(0.65,15,0.1);
+        translate([d/2,0,-5]) linear_extrude(height=10) rotate([0,0,$t*360]) polygon(points=[[0.19,0.09],[-0.09,0.09],[-0.09,-0.09],[-0.01,-0.09],[-0.01,0.01],[0.19,0.01]]);
+        translate([d/2,0,-5]) linear_extrude(height=1) circle(0.25,$fn=100);
+        translate([d/2,0,4]) linear_extrude(height=1) circle(0.25,$fn=100);
+    }
+
+    //Main scaffolding
+    union() {
+        difference() {
+            translate([-d/2,0,-5.5]) linear_extrude(height=1.5) circle(0.4, $fn=100);
+            translate([-d/2,0,-5.05]) linear_extrude(height=1.05) circle(0.26, $fn=100);
         };
-        translate([-2.5,-1.375,-1]) linear_extrude(height=1) circle(0.125,$fn=100);
-    };
-}
-union(){
-    translate([-2.5,-1.375,-0.49]) linear_extrude(height=0.1) circle(0.2, $fn=100);
-    translate([-2.5,-1.375,-0.81]) linear_extrude(height=0.32) circle(0.115, $fn=100);
-    translate([-2.5,-1.375,-1.81]) linear_extrude(height=1) circle(0.25, $fn=100);
+        difference() {
+            translate([d/2,0,-5.5]) linear_extrude(height=1.5) circle(0.4, $fn=100);
+            translate([d/2,0,-5.05]) linear_extrude(height=1.05) circle(0.26, $fn=100);
+        };
+        difference() {
+            translate([-d/2,0,4]) linear_extrude(height=1.5) circle(0.4, $fn=100);
+            translate([-d/2,0,4]) linear_extrude(height=1.05) circle(0.26, $fn=100);
+            translate([-d/2-0.5,0,3.5]) linear_extrude(height=2) square(1,1);
+        };
+        difference() {
+            translate([d/2,0,4]) linear_extrude(height=1.5) circle(0.4, $fn=100);
+            translate([d/2,0,4]) linear_extrude(height=1.05) circle(0.26, $fn=100);
+            translate([d/2-0.5,0,3.5]) linear_extrude(height=2) square(1,1);
+        };
+        translate([0,0,-6.5]) linear_extrude(height=1) difference() { 
+            polygon(points=[[-3,0.5],[-3,-3.5],[3,-3.5],[3,0.5]]);
+            polygon(points=[[-2,-0.5],[-2,-2.5],[2,-2.5],[2,-0.5]]);
+        };
+        translate([0,0,5]) linear_extrude(height=1) difference() {
+            polygon(points=[[-3,0.5],[-3,-3.5],[3,-3.5],[3,0.5]]);
+            polygon(points=[[-2,-0.5],[-2,-2.5],[2,-2.5],[2,-0.5]]);
+        };
+        
+        translate([2,-3.5,-5.5]) linear_extrude(height=10.5) square(1,1);
+        translate([-3,-3.5,-5.5]) linear_extrude(height=10.5) square(1,1);
+        translate([-0.25,-3.5,-5.5]) linear_extrude(height=10.5) square(0.5,0.5);
+        difference(){
+            union() {
+                translate([-3,-2.5,-0.25]) linear_extrude(height=0.65) square(size=[1,2.5]);
+                translate([-2.5,0,-0.25]) linear_extrude(height=0.65) circle(0.5, $fn=100);
+            }
+            translate([-2.5,0,-0.5]) linear_extrude(height=1) circle(0.2, $fn=100);
+        }
+        translate([-2.5,0,0.41]) Gear(1.03,23,0.1);
+        translate([-2.5,0,-0.5]) linear_extrude(height=1) circle(0.19, $fn=100);
+        translate([-2.5,0,-0.3]) linear_extrude(height=0.04) circle(0.3,$fn=100);
+        translate([-2.5,0,-0.8]) linear_extrude(height=0.3) circle(0.4,$fn=100);
+        difference() {
+            union(){
+                translate([-2.5,0,-0.8]) linear_extrude(height=0.3) /*rotate([0,0,90]) */polygon(points=[[-0.4,0],[0.4,0],[0.2,-1.4],[-0.2,-1.4]]);
+                translate([-2.5,-1.4,-0.8]) linear_extrude(height=0.3) circle(0.2,$fn=100);
+            };
+            translate([-2.5,-1.375,-1]) linear_extrude(height=1) circle(0.125,$fn=100);
+        };
+        translate([-2.5,-1.375,-0.49]) linear_extrude(height=0.1) circle(0.2, $fn=100);
+        translate([-2.5,-1.375,-0.81]) linear_extrude(height=0.32) circle(0.115, $fn=100);
+        translate([-2.5,-1.375,-1.81]) linear_extrude(height=1) circle(0.25, $fn=100);
+    }
 }
 
 
